@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./style.css" />
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="container">
+      <input type="checkbox" id="flip" />
+      <div class="cover">
+        <div class="front">
+          <img src="./Images/frontImg.jpg" alt="" />
+          <div class="text">
+            <span class="text-1">Track your finances with ease.</span>
+            <span class="text-2">Let's get started!</span>
+          </div>
+        </div>
+        <div class="back">
+          <img class="backImg" src="./Images/backImg.jpg" alt="" />
+          <div class="text">
+            <span class="text-1"
+              >Complete miles of journey <br />
+              with one step</span
+            >
+            <span class="text-2">Let's get started</span>
+          </div>
+        </div>
+      </div>
+      <div class="forms">
+        <div class="form-content">
+          <div class="login-form">
+            <div class="title">Login</div>
+            <form action="#">
+              <div class="input-boxes">
+                <div class="input-box">
+                  <i class="fas fa-envelope"></i>
+                  <input type="text" placeholder="Enter your email" required />
+                </div>
+                <div class="input-box">
+                  <i class="fas fa-lock"></i>
+                  <input type="password" placeholder="Enter your password" required />
+                </div>
+                <!-- <div class="text"><a href="#">Forgot password?</a></div> -->
+                <div class="button input-box">
+                  <input id="login" type="submit" value="Sumbit" />
+                </div>
+                <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
+              </div>
+            </form>
+          </div>
+          <div class="signup-form">
+            <div class="title">Signup</div>
+            <form action="#">
+              <div class="input-boxes">
+                <div class="input-box">
+                  <i class="fas fa-user"></i>
+                  <input type="text" placeholder="Enter your name" required />
+                </div>
+                <div class="input-box">
+                  <i class="fas fa-envelope"></i>
+                  <input type="text" placeholder="Enter your email" required />
+                </div>
+                <div class="input-box">
+                  <i class="fas fa-lock"></i>
+                  <input type="password" placeholder="Enter your password" required />
+                </div>
+                <div class="input-box">
+                  <i class="fas fa-lock"></i>
+                  <input type="password" placeholder="Confirm your password" required />
+                </div>
+                <div class="button input-box">
+                  <input id="signup" type="submit" value="Sumbit" />
+                </div>
+                <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- importing axios here -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      // handling sign up
+
+      let btn = document.querySelector("#signup");
+      btn.addEventListener("click", async function (e) {
+        e.preventDefault();
+        let email = document.querySelector(".signup-form .input-boxes .input-box:nth-child(2) input").value;
+        let name = document.querySelector(".signup-form .input-boxes .input-box:nth-child(1) input").value;
+        let password = document.querySelector(".signup-form .input-boxes .input-box:nth-child(3) input").value;
+        let confirmPassword = document.querySelector(".signup-form .input-boxes .input-box:nth-child(4) input").value;
+
+        // let resp = await axios.post("/auth/signup", { email, name, password, confirmPassword });
+        axios.post("/auth/signup", { email, name, password, confirmPassword }).then((response) => {
+          console.log(response.data);
+          // Check if the signup was successful
+          if (response.data.message === "user signed up") {
+            alert("Congratulations for signing up!");
+            // Reload the page
+            window.location.reload();
+          } else {
+            // Handle other cases
+          }
+        });
+      });
+
+      // handling login
+      let btn2 = document.querySelector("#login");
+      btn2.addEventListener("click", async function (e) {
+        e.preventDefault();
+        let email = document.querySelector(".login-form .input-boxes .input-box:nth-child(1) input").value;
+        let password = document.querySelector(".login-form .input-boxes .input-box:nth-child(2) input").value;
+
+        // let resp = await axios.post("/auth/signup", { email, name, password, confirmPassword });
+        axios.post("/auth/login", { email, password }).then((response) => {
+          console.log(response.data);
+          // Check if the signup was successful
+          if (response.data.message === "login success") {
+            // redirect to dashboard
+            alert("login successful!!");
+            window.location.reload();
+          } else {
+            // Handle other cases
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
