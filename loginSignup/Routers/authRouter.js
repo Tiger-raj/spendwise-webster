@@ -14,13 +14,31 @@ authRouter.route("/signup").post(postSignUp);
 authRouter.route("/login").get(getLogin).post(loginUser);
 
 async function postSignUp(req, res) {
-  let dataObj = req.body;
-  // creating user in database using userModel
-  let user = await userModel.create(dataObj);
-  res.json({
-    message: "user signed up",
-    data: user,
-  });
+  try {
+    let dataObj = req.body;
+
+    // creating user in database using userModel
+    let user = await userModel.create(dataObj);
+
+    res.json({
+      message: "user signed up",
+      data: user,
+    });
+  } catch (error) {
+    if (error.name === "ValidationError") {
+      // Handle validation errors
+      res.status(400).json({
+        message: "Invalid input. Please check your data.",
+        error: error.message,
+      });
+    } else {
+      // Handle other unexpected errors
+      console.error(error);
+      res.status(500).json({
+        message: "Internal Server Error",
+      });
+    }
+  }
 }
 
 function getLogin(req, res) {
@@ -42,17 +60,17 @@ async function loginUser(req, res) {
             userDetails: data,
           });
         } else {
-          return res.json({
+          return res.status(401).json({
             message: "Wrong Credentials!!",
           });
         }
       } else {
-        return res.json({
+        return res.status(401).json({
           message: "User not found",
         });
       }
     } else {
-      return res.json({
+      return res.status(401).json({
         message: "Empty field found!!",
       });
     }
