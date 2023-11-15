@@ -95,7 +95,7 @@
         let confirmPassword = document.querySelector(".signup-form .input-boxes .input-box:nth-child(4) input").value;
 
         axios
-          .post("/auth/signup", { email, name, password, confirmPassword })
+          .post("/user/signup", { email, name, password, confirmPassword })
           .then((response) => {
             console.log(response.data);
             // Check if the signup was successful
@@ -124,11 +124,11 @@
         let password = document.querySelector(".login-form .input-boxes .input-box:nth-child(2) input").value;
 
         axios
-          .post("/auth/login", { email, password })
+          .post("/user/login", { email, password })
           .then((response) => {
             console.log(response.data);
             // Check if the signup was successful
-            if (response.data.message === "login success") {
+            if (response.data.message === "User has logged in") {
               // redirect to dashboard
               alert("login successful!!");
               window.location.reload();

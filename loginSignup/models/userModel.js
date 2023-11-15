@@ -39,6 +39,15 @@ const userSchema = mongoose.Schema({
       return this.password == this.confirmPassword;
     },
   },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+  },
+  profileImage: {
+    type: String, // we'll use multer for this purpose
+    default: "img/users/default.jpeg",
+  },
 });
 
 // using a pre hook on userSchema so that we can avoid saving confirmPassword to the db (cuz it's a redundant data)

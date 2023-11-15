@@ -1,69 +1,26 @@
 const express = require("express");
 const userRouter = express.Router();
-const userModel = require("../models/userModel");
-const protectRoute = require("./authHelper");
+const { getUser, getAllUser, updateUser, deleteUser } = require("../controller/userController");
+const { getLogin, postSignUp, loginUser, isAuthorised, protectRoute } = require("../controller/authController");
+const path = require("path");
+const rootDirectory = path.resolve(__dirname, "..");
 
-userRouter
-  .route("/") // when the route is same as specified above i.e. /user, so we'r using / here
-  .get(protectRoute, getUsers) // it'll at first call the middleware function protectRoute, which will allow user to get the list of users only if the user is logged in
-  .patch(protectRoute, updateUser)
-  .delete(protectRoute, deleteUser);
+// serving static files
+userRouter.use(express.static(path.join(rootDirectory, "public")));
 
-// cookies
-userRouter.route("/getCookies").get(getCookies);
-userRouter.route("/setCookies").get(setCookies);
+// signup
+userRouter.route("/signup").post(postSignUp);
+// login
+userRouter.route("/login").get(getLogin).post(loginUser);
 
-userRouter.route("/:mail").get(getUserByMail);
+// user options
+userRouter.use(protectRoute); // checking if user is logged in or not
 
-async function getUsers(req, res) {
-  let allUsers = await userModel.find();
-  res.json({
-    message: "list of all users",
-    data: allUsers,
-  });
-}
+userRouter.route("/:id").patch(updateUser).delete(deleteUser);
 
-async function updateUser(req, res) {
-  // console.log(req.body);
-  let mail = req.body.email;
-  let dataToBeUpdated = req.body;
-  let user = await userModel.findOneAndUpdate({ email: mail }, dataToBeUpdated);
-  res.json({
-    message: "data updated successfully",
-    data: user,
-  });
-}
-
-async function deleteUser(req, res) {
-  let dataToBeDeleted = req.body;
-  let user = await userModel.findOneAndDelete(dataToBeDeleted);
-  res.json({
-    message: "data has been deleted",
-    data: user,
-  });
-}
-
-async function getUserByMail(req, res) {
-  // console.log(req.params);
-  let mail = req.params.mail;
-  let user = await userModel.findOne({ email: mail });
-  res.json({
-    message: "list of all users",
-    data: user,
-  });
-}
-
-function setCookies(req, res) {
-  res.cookie("isLoggedIn", true, { maxAge: 1000 * 60 * 60 * 24, secure: true, httpOnly: true }); // the parameters in {} are options, maxAge defines the age of cookies i.e. 24hrs here, secure true means the cookies can only be accessed by https protocol and not by http, httpOnly means cookies are not accessible from frontend and hence frontend cannot modify it, which is good for security purpose
-  res.cookie("isPrimeMember", true);
-
-  res.send("cookies set");
-}
-
-function getCookies(req, res) {
-  let cookies = req.cookies;
-  console.log(cookies);
-  res.send("cookies received");
-}
+userRouter.route("/userProfile").get(getUser);
+// admin specific func
+userRouter.use(isAuthorised(["admin"]));
+userRouter.route("").get(getAllUser);
 
 module.exports = userRouter;

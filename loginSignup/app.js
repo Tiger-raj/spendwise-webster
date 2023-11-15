@@ -10,7 +10,5 @@ app.use(cookieParser()); // we'll use cookies as middleware function so that we 
 
 // mini app
 const userRouter = require("./Routers/userRouter");
-const authRouter = require("./Routers/authRouter");
 
 app.use("/user", userRouter); // base route of mini app is /user and the router to use is userRouter
-app.use("/auth", authRouter);
