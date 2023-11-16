@@ -2,22 +2,31 @@ const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const rootDirectory = path.resolve(__dirname, "..");
+const bcrypt = require("bcrypt");
 
+const saltRounds = 10;
 // post signup
 module.exports.postSignUp = async function postSignUp(req, res) {
   try {
     let dataObj = req.body;
 
-    // creating user in database using userModel
+    // Hash the password asynchronously
+    const hashedPassword = await bcrypt.hash(dataObj.password, saltRounds);
+
+    // Update the user object with the hashed password
+    dataObj.password = hashedPassword;
+
+    // Create user in the database using userModel
     let user = await userModel.create(dataObj);
+
     if (user) {
       return res.json({
-        message: "user signed up",
+        message: "User signed up",
         data: user,
       });
     } else {
       res.json({
-        message: "error while signing up",
+        message: "Error while signing up",
       });
     }
   } catch (error) {
@@ -46,11 +55,14 @@ module.exports.getLogin = function getLogin(req, res) {
 module.exports.loginUser = async function loginUser(req, res) {
   try {
     let data = req.body;
+
     if (data.email) {
       let user = await userModel.findOne({ email: data.email });
+
       if (user) {
-        // implement bcrypt's compare function to make it more safe
-        if (user.password == data.password) {
+        let passwordMatch = await bcrypt.compare(data.password, user.password);
+
+        if (passwordMatch) {
           let uid = user["_id"];
           let token = jwt.sign({ payload: uid }, process.env.JWT_KEY);
 

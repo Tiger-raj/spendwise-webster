@@ -94,26 +94,31 @@
         let password = document.querySelector(".signup-form .input-boxes .input-box:nth-child(3) input").value;
         let confirmPassword = document.querySelector(".signup-form .input-boxes .input-box:nth-child(4) input").value;
 
-        axios
-          .post("/user/signup", { email, name, password, confirmPassword })
-          .then((response) => {
-            console.log(response.data);
-            // Check if the signup was successful
-            if (response.data.message === "user signed up") {
-              alert("Congratulations for signing up!");
-              // Reload the page
-              window.location.reload();
-            }
-          })
-          .catch((error) => {
-            if (response.status == 400) {
-              alert("Invalid input. Please check your data.");
-            } else {
-              alert("Internal Server Error.");
-            }
-            console.error("Error:", error);
-            // Handle other errors if needed
-          });
+        // checking if password and confirmPassword are same or not
+        if (password != confirmPassword) {
+          alert("Password and Confirm Password are not matching !");
+        } else {
+          axios
+            .post("/user/signup", { email, name, password, confirmPassword })
+            .then((response) => {
+              console.log(response.data);
+              // Check if the signup was successful
+              if (response.data.message === "User signed up") {
+                alert("Congratulations for signing up!");
+                // Reload the page
+                window.location.reload();
+              }
+            })
+            .catch((error) => {
+              if (response.status == 400) {
+                alert("Invalid input. Please check your data.");
+              } else {
+                alert("Internal Server Error.");
+              }
+              console.error("Error:", error);
+              // Handle other errors if needed
+            });
+        }
       });
 
       // handling login

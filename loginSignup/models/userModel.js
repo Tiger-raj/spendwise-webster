@@ -31,14 +31,14 @@ const userSchema = mongoose.Schema({
     required: true,
     minLength: 8,
   },
-  confirmPassword: {
-    type: String,
-    required: true,
-    minLength: 8,
-    validate: function () {
-      return this.password == this.confirmPassword;
-    },
-  },
+  // confirmPassword: {
+  //   type: String,
+  //   required: true,
+  //   minLength: 8,
+  //   validate: function () {
+  //     return this.password == this.confirmPassword;
+  //   },
+  // },
   role: {
     type: String,
     enum: ["admin", "user"],
@@ -51,9 +51,9 @@ const userSchema = mongoose.Schema({
 });
 
 // using a pre hook on userSchema so that we can avoid saving confirmPassword to the db (cuz it's a redundant data)
-userSchema.pre("save", function () {
-  this.confirmPassword = undefined;
-});
+// userSchema.pre("save", function () {
+//   this.confirmPassword = undefined;
+// });
 
 // models - to use schema made above
 const userModel = mongoose.model("userModel", userSchema); // first parameter is name of model and second is the schema which is used to built this model
