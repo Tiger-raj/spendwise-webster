@@ -24,7 +24,7 @@ function ExpenseForm() {
 
 
     // Destructuring state variables for easier access
-    const { title, amount, date, category,description } = inputState;
+    const { title, amount, date, category, description } = inputState;
 
    // Function to handle input changes
     const handleInput = name => e => {
