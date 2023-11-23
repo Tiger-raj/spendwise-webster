@@ -3,12 +3,13 @@ import React, { useContext, useState } from "react"
 import axios from 'axios'
 
 
+
 // Base URL for API requests
 const BASE_URL = "http://localhost:5000/api/v1/";
 
-
-// Creating a new context
+ // Creating a new context
 const GlobalContext = React.createContext()
+
 
 // Global Provider component
 export const GlobalProvider = ({children}) => {
@@ -18,6 +19,8 @@ export const GlobalProvider = ({children}) => {
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
 
+    //State for targets
+    const [target, setTarget] = useState([])
 
     //add an income
     const addIncome = async (income) => {
@@ -28,7 +31,6 @@ export const GlobalProvider = ({children}) => {
         getIncomes()
     }
 
-
     //fetch incomes
     const getIncomes = async () => {
         const response = await axios.get(`${BASE_URL}get-incomes`)
@@ -36,13 +38,11 @@ export const GlobalProvider = ({children}) => {
         console.log(response.data)
     }
 
-
     //delete an income
     const deleteIncome = async (id) => {
         const res  = await axios.delete(`${BASE_URL}delete-income/${id}`)
         getIncomes()
     }
-
 
     //calculate total income
     const totalIncome = () => {
@@ -64,7 +64,6 @@ export const GlobalProvider = ({children}) => {
         getExpenses()
     }
 
-
     //fetch expenses
     const getExpenses = async () => {
         const response = await axios.get(`${BASE_URL}get-expenses`)
@@ -72,13 +71,12 @@ export const GlobalProvider = ({children}) => {
         console.log(response.data)
     }
 
-    
+
     //delete an expense
     const deleteExpense = async (id) => {
         const res  = await axios.delete(`${BASE_URL}delete-expense/${id}`)
         getExpenses()
     }
-
 
     //calculate total expense
     const totalExpenses = () => {
@@ -95,7 +93,6 @@ export const GlobalProvider = ({children}) => {
     const totalBalance = () => {
         return totalIncome() - totalExpenses()
     }
-
 
     //function to generate transaction history
     const transactionHistory = () => {
@@ -123,7 +120,9 @@ export const GlobalProvider = ({children}) => {
             totalBalance,
             transactionHistory,
             error,
-            setError
+            setError,
+            target,
+            setTarget
         }}>
             {children}
         </GlobalContext.Provider>
