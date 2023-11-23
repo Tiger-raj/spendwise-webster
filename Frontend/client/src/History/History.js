@@ -44,7 +44,8 @@ function History() {
 const HistoryStyled = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
+    padding: 2rem 1.5rem;
     .history-item{
         background: #FCF6F9;
         border: 2px solid #FFFFFF;
@@ -54,6 +55,11 @@ const HistoryStyled = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    .h2{
+        color: rgba(95, 30, 115);
+        font-wieght: bold;
+        font-size: 2em;
     }
 `;
 
