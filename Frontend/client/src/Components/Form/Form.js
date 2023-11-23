@@ -36,10 +36,11 @@ function Form() {
 
     // Function to handle form submission
     const handleSubmit = e => {
-        e.preventDefault();
+        e.preventDefault()
 
         // Calling addIncome function with form data
         addIncome(inputState)
+        getIncomes(inputState)
 
         // Resetting the input state after submission
         setInputState({
@@ -97,7 +98,7 @@ function Form() {
             <div className="selects input-control">
                 <select required value={category} name="category" id="category" onChange={handleInput('category')}>
 
-                     {/* Options for different income categories */}
+                    {/* Options for different income categories */}
                     <option value=""  disabled >Select Option</option>
                     <option value="salary">Salary</option>
                     <option value="freelancing">Freelancing</option>
