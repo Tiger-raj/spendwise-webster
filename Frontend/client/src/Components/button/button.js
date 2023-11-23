@@ -23,8 +23,8 @@ function Button({name, icon, onClick, bg, bPad, color, bRad}) {
 
 // Styled button component using styled-components
 const ButtonStyled = styled.button`
-    outline: none;
-    border: none;
+    
+    border: 3px solid black;
     font-family: inherit;
     font-size: inherit;
     display: flex;
