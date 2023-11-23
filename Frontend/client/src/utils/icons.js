@@ -1,3 +1,4 @@
+// Defining constants for various icons using JSX syntax
 export const dashboard = <i className="fa-solid fa-chart-line"></i>
 export const transactions = <i className="fa-solid fa-credit-card"></i>
 export const categories = <i className="fa-solid fa-tags"></i>
@@ -14,7 +15,7 @@ export const piggy = <i className="fa-solid fa-piggy-bank"></i>
 export const yt = <i className="fa-brands fa-youtube"></i>
 export const card = <i className="fa-brands fa-cc-visa"></i>
 export const users = <i className="fa-solid fa-users-between-lines"></i>
-export const dollar = <i className="fa-solid fa-dollar-sign"></i>
+export const dollar = <i class="fa-solid fa-indian-rupee-sign"></i>
 export const calender = <i className="fa-solid fa-calendar"></i>
 export const comment = <i className="fa-solid fa-comment"></i>
 export const plus = <i className="fa-solid fa-plus"></i>
@@ -27,3 +28,10 @@ export const food = <i className="fa-solid fa-bowl-food"></i>
 export const medical = <i className="fa-solid fa-briefcase-medical"></i>
 export const tv = <i className="fa-solid fa-tv"></i>
 export const circle = <i className="fa-solid fa-circle-dot"></i>
+export const target = <i class="fa-solid fa-bullseye"></i>
+export const mobile = <i class="fa-solid fa-mobile"></i>
+export const gift = <i class="fa-solid fa-gift"></i>
+export const motorcycle = <i class="fa-solid fa-motorcycle"></i>
+export const car = <i class="fa-solid fa-car"></i>
+export const laptop = <i class="fa-solid fa-laptop"></i>
+export const Bills = <i class="fa-solid fa-file-invoice-dollar"></i>
