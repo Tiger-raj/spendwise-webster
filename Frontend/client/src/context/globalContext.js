@@ -22,6 +22,9 @@ export const GlobalProvider = ({children}) => {
     //State for targets
     const [target, setTarget] = useState([])
 
+    //State for bills
+    // const [bills, setBills] = useState([])
+
     //add an income
     const addIncome = async (income) => {
         const response = await axios.post(`${BASE_URL}add-income`, income)
@@ -101,8 +104,55 @@ export const GlobalProvider = ({children}) => {
             return new Date(b.createdAt) - new Date(a.createdAt)
         })
 
-        return history.slice(0, 3)
+        return history.slice(0, 5)
     }
+
+    //add a target
+    const addTarget = async (target) => {
+        const response = await axios.post(`${BASE_URL}add-target`, target)
+            .catch((err) =>{
+                setError(err.response.data.message)
+            })
+        getTarget()
+    }
+
+    //fetch target
+    const getTarget = async () => {
+        const response = await axios.get(`${BASE_URL}get-target`)
+        setTarget(response.data)
+        console.log(response.data)
+    }
+
+    //delete a target
+    const deleteTarget = async (id) => {
+        const res  = await axios.delete(`${BASE_URL}delete-target/${id}`)
+        getTarget()
+    }
+
+
+    //add bills
+    // const addBills = async (target) => {
+    //     const response = await axios.post(`${BASE_URL}add-bills`, bills)
+    //         .catch((err) =>{
+    //             setError(err.response.data.message)
+    //         })
+    //     getBills()
+    // }
+
+    //fetch bills
+    // const getBills = async () => {
+    //     const response = await axios.get(`${BASE_URL}get-bills`)
+    //     setBills(response.data)
+    //     console.log(response.data)
+    // }
+
+    //delete a bill
+    // const deleteBills = async (id) => {
+    //     const res  = await axios.delete(`${BASE_URL}delete-bills/${id}`)
+    //     getBills()
+    // }
+
+
 
 
     return (
@@ -122,7 +172,15 @@ export const GlobalProvider = ({children}) => {
             error,
             setError,
             target,
-            setTarget
+            setTarget,
+            addTarget,
+            getTarget,
+            deleteTarget, 
+            // bills,
+            // setBills, 
+            // addBills,
+            // getBills,
+            // deleteBills
         }}>
             {children}
         </GlobalContext.Provider>
