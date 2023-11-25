@@ -1,8 +1,11 @@
-import { dashboard, expenses, transactions, trend } from '../utils/icons'
+// Importing specific icons from a file '../utils/icons'
+import { dashboard, expenses, transactions, trend, target, Bills } from '../utils/icons'
+
+//Creating an array of menu items
 export const menuItems = [
     {
         id: 1,
-        title: 'Dashboard',
+        title: "Dashboard",
         icon: dashboard,
         link: '/dashboard'
     },
@@ -24,4 +27,17 @@ export const menuItems = [
         icon: expenses,
         link: '/dashboard',
     },
+    {
+        id: 5,
+        title: "Target",
+        icon: target,
+        link: '/dashboard',
+    },
+
+    {
+        id: 6,
+        title: "Bills",
+        icon: Bills,
+        link: '/dashboard',
+    }
 ]
