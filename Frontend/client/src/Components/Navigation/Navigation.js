@@ -1,42 +1,66 @@
-import React from 'react'
-import styled from 'styled-components'
-import avatar from '../../context/img/avatar.png'
-import { signout } from '../../utils/Icons'
-import { menuItems } from '../../utils/menuItems.js'
+// Importing necessary modules and resources
+import React, { useState } from "react";
+import styled from "styled-components";
+import avatar from '../../img/avatar.png'
+import { menuItems } from "../../utils/menuitems";
+import { signout } from "../../utils/icons";
+import {dollar} from "../../utils/icons";
+import { useGlobalContext } from "../../context/globalContext";
+import Button from '../../Components/Button/Button';
 
-function Navigation({active,setActive}){
+
+
+function Navigation({active, setActive}) {
+    const {totalBalance} = useGlobalContext()
+
     return (
         <NavStyled>
+            {/* User info section */} 
             <div className="user-con">
                 <img src={avatar} alt="" />
                 <div className="text">
                     <h2>Mike</h2>
-                    <p>$$</p>
+                    <p>{dollar} {totalBalance()}</p>
                 </div>
             </div>
+
+            {/* Menu items section */}
             <ul className="menu-items">
+
+                {/* Mapping through menu items and rendering them */}
                 {menuItems.map((item) => {
-                    return <li
+                    return (<li
                         key={item.id}
                         onClick={() => setActive(item.id)}
-                        className={active === item.id ? 'active': ''}
+                        className= {active === item.id? 'active': ''}
                     >
                         {item.icon}
                         <span>{item.title}</span>
                     </li>
-                })}
+                    );
+                })} 
+
             </ul>
+
+            {/* Sign out section */}
             <div className="bottom-nav">
-                <li>
-                    {signout} Sign Out
-                </li>
+            <Button 
+                    name={'Sign Out'}
+                    icon={signout}
+                    bPad={'.8rem 1.6rem'}
+                    bRad={'30px'}
+                    bg={'var(--color-accent'}
+                    color={'#fff'}
+                />
             </div>
         </NavStyled>
     )
 }
+
+// Styled component for navigation
 const NavStyled = styled.nav`
     padding: 2rem 1.5rem;
-    width: 374px;
+    width: 300px;
     height: 100%;
     background: rgba(252, 246, 249, 0.78);
     border: 3px solid #FFFFFF;
@@ -46,6 +70,7 @@ const NavStyled = styled.nav`
     flex-direction: column;
     justify-content: space-between;
     gap: 2rem;
+    border: 3px solid black;
     .user-con{
         height: 100px;
         display: flex;
@@ -59,15 +84,16 @@ const NavStyled = styled.nav`
             background: #fcf6f9;
             border: 2px solid #FFFFFF;
             padding: .2rem;
-            box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
+            box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.6);
         }
         h2{
-            color: rgba(34, 34, 96, 1);
+            color: rgba(95, 30, 115);
         }
         p{
             color: rgba(34, 34, 96, .6);
         }
     }
+
     .menu-items{
         flex: 1;
         display: flex;
@@ -88,12 +114,15 @@ const NavStyled = styled.nav`
                 font-size: 1.4rem;
                 transition: all .4s ease-in-out;
             }
+
         }
     }
+
     .active{
-        color: rgba(34, 34, 96, 1) !important;
+        color: rgba(78, 11, 117); !important;
         i{
-            color: rgba(34, 34, 96, 1) !important;
+            color: rgba(34, 34, 96, 1); !important;
+
         }
         &::before{
             content: "";
@@ -102,9 +131,10 @@ const NavStyled = styled.nav`
             top: 0;
             width: 4px;
             height: 100%;
-            background: #222260;
+            background: #630f94;
             border-radius: 0 10px 10px 0;
         }
     }
 `;
+
 export default Navigation
