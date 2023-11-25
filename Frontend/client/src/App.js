@@ -9,6 +9,9 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import Incomes from './Components/Incomes/Incomes';
 import Expenses from './Components/Expenses/Expenses';
 import { useGlobalContext } from './context/globalContext';
+import History from './History/History';
+import Target from './Components/Target/Target';
+import Bills from './Components/Bills/Bills';
 
 
 function App() {
@@ -28,12 +31,17 @@ function App() {
       case 1:
         return <Dashboard />
       case 2:
-        return <Dashboard />
+        return <History />
 
       case 3:
         return <Incomes />
       case 4:
         return <Expenses />
+      case 5:
+        return <Target />
+      case 6:
+        return <Bills />  
+        
       default: 
         return <Dashboard />
 
@@ -56,6 +64,10 @@ function App() {
         <Navigation active = {active} setActive = {setActive} />
         <main>
           {displayData()}
+
+          <div>
+            <input type="file" />
+          </div>
 
         </main>
 
